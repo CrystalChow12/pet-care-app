@@ -9,14 +9,16 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "mysql2": "^3.15.2",
+    "next": "15.5.4",
+    "prettier": "^3.6.2",
     "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "next": "15.5.4"
+    "react-dom": "19.1.0"
   },
   "devDependencies": {
     "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^19",
+    "@types/node": "^24.7.1",
+    "@types/react": "^19.2.2",
     "@types/react-dom": "^19",
     "@tailwindcss/postcss": "^4",
     "tailwindcss": "^4",
