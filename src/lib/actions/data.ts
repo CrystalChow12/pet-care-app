@@ -23,3 +23,5 @@ export async function getAllOwners() : Promise<Owner[]> {
         throw new Error('Failed to fetch owners'); 
     }
 }
+
+
