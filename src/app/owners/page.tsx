@@ -11,7 +11,7 @@ export default async function OwnersPage() {
   return (
     <div>
       <div>
-        <Link href="/owners/create">Add an Owner</Link>
+        <Link href="/owners/add">Add an Owner</Link>
       </div>
       {owners.map((owner) => (
         <div key={owner.id}>

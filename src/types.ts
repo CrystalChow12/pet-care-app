@@ -9,3 +9,14 @@ export type InputProps = {
     validation: object; 
     multiline?: boolean; //true = textarea, false = input (optional) 
 }; 
+
+
+export type Owner = {
+    id: number; 
+    firstname: string; 
+    lastname: string; 
+    email?: string;  //not every owner would have an email. It can be null
+    phone: string; 
+}; 
+
+export type OwnerInput = Omit<Owner, 'id'>; //omit the id key since its not inserted from the form 

@@ -17,7 +17,7 @@ export const createNameValidation = (fieldName: "firstname" | "lastname") => ({
       message: "Limit exceeded. 30 characters max",
     },
     pattern: {
-      value: /^[a-zA-Z]+$/,
+      value: /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[ '-][A-Za-zÀ-ÖØ-öø-ÿ]+)*$/,
       message: "Invalid name.",
     },
   },

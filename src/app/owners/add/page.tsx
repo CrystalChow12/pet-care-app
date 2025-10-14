@@ -1,4 +1,5 @@
 "use client";
+import { addOwner } from "../../../lib/actions/data";
 import { Input } from "../../components/Input";
 import { useForm, FormProvider } from "react-hook-form";
 import { useState } from "react";
@@ -9,14 +10,23 @@ import {
   phone_validation,
 } from "../../../utils/inputValidation";
 
+import type { Owner, OwnerInput } from "../../../types";
+
 const AddOwnerPage = () => {
-  const methods = useForm();
+  const methods = useForm<OwnerInput>(); //of type OwnerInput
+
   const [success, setSuccess] = useState(false);
 
-  const onSubmit = methods.handleSubmit((data) => {
+  const onSubmit = methods.handleSubmit(async (data: OwnerInput) => {
     console.log(data);
-    methods.reset();
-    setSuccess(true);
+
+    try {
+      await addOwner(data);
+      setSuccess(true);
+      methods.reset();
+    } catch (error) {
+      console.log("Error inserting into the db: ", error);
+    }
   });
 
   return (
@@ -32,6 +42,7 @@ const AddOwnerPage = () => {
           onSubmit={(e) => e.preventDefault()}
         >
           <Input {...firstname_validation} />
+          {/* instead of firstname_validation.name or firstname_validation.label and so on. the spread property `...props` provides a concise way to pass multiple properties from an object as individual props to a React component.*/}
           <Input {...lastname_validation} />
           <Input {...email_validation} />
           <Input {...phone_validation} />
@@ -51,6 +62,12 @@ const AddOwnerPage = () => {
               </p>
             )}
           </div>
+
+          {/* <div className="mt-5">
+            {success && (
+              <p className="text-red-700">There was error while completing this action.</p>
+            )}
+          </div> */}
         </form>
       </FormProvider>
     </div>
