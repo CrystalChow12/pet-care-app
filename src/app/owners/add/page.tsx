@@ -10,22 +10,33 @@ import {
   phone_validation,
 } from "../../../utils/inputValidation";
 
-import type { Owner, OwnerInput } from "../../../types";
+import type { Owner, OwnerInput, Message } from "../../../types";
 
 const AddOwnerPage = () => {
   const methods = useForm<OwnerInput>(); //of type OwnerInput
 
-  const [success, setSuccess] = useState(false);
+  const [message, setMessage] = useState<Message | null>(null); //message can be type thats either the string 'success' or the string 'error' OR it can be null (theres no message to be shown). We are setting message initally.
 
   const onSubmit = methods.handleSubmit(async (data: OwnerInput) => {
     console.log(data);
+    setMessage(null); //clear previous success messages
 
     try {
-      await addOwner(data);
-      setSuccess(true);
+      const result = await addOwner(data);
+
+      setMessage({
+        type: "success",
+        text: result.message,
+      });
+
       methods.reset();
     } catch (error) {
       console.log("Error inserting into the db: ", error);
+
+      setMessage({
+        type: "error",
+        text: "There was an error while completing this action.",
+      });
     }
   });
 
@@ -55,19 +66,18 @@ const AddOwnerPage = () => {
             Submit
           </button>
 
-          <div className="mt-5">
-            {success && (
-              <p className="text-green-500">
-                Form has been submitted successfully
+          {/* Display our status message only if it exists. That is what message && means  */}
+          {message && (
+            <div className="mt-5">
+              <p
+                className={
+                  message.type === "success" ? "text-green-600" : "text-red-700"
+                }
+              >
+                {message.text}
               </p>
-            )}
-          </div>
-
-          {/* <div className="mt-5">
-            {success && (
-              <p className="text-red-700">There was error while completing this action.</p>
-            )}
-          </div> */}
+            </div>
+          )}
         </form>
       </FormProvider>
     </div>

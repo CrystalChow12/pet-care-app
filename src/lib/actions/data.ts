@@ -30,9 +30,9 @@ export async function addOwner({
     const [result] = await conn.execute<ResultSetHeader>(
       `INSERT INTO Owners (firstname, lastname, email, phone) VALUES (?,?,?,?); `,
       [firstname, lastname, email?.trim() || null, phone]
-    ); 
+    );
 
-    return {result, message: "Owner successfully inserted" };
+    return { message: "Owner successfully inserted" };
   } catch (error) {
     console.log("Error while inserting ", error);
     return { message: "Error inserting into Owners table" }; //return this to the client

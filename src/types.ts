@@ -20,3 +20,10 @@ export type Owner = {
 }; 
 
 export type OwnerInput = Omit<Owner, 'id'>; //omit the id key since its not inserted from the form 
+
+
+//the messages returning from the db actions 
+export type Message = {
+    type: 'success' | 'error'; 
+    text: string; 
+}
