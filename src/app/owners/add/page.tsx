@@ -24,10 +24,10 @@ const AddOwnerPage = () => {
     try {
       const result = await addOwner(data);
 
-      setMessage({
-        type: "success",
-        text: result.message,
-      });
+      //check for the success or failure
+      result.success
+        ? setMessage({ type: "success", text: result.message })
+        : setMessage({ type: "error", text: result.message });
 
       methods.reset();
     } catch (error) {

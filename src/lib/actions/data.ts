@@ -2,7 +2,7 @@
 
 import { connectDB } from "./../db";
 import { ResultSetHeader, RowDataPacket } from "mysql2/promise";
-import type { Owner } from "../../types";
+import type { Owner, Message } from "../../types";
 
 export async function getAllOwners(): Promise<Owner[]> {
   const conn = await connectDB();
@@ -32,10 +32,25 @@ export async function addOwner({
       [firstname, lastname, email?.trim() || null, phone]
     );
 
-    return { message: "Owner successfully inserted" };
-  } catch (error) {
-    console.log("Error while inserting ", error);
-    return { message: "Error inserting into Owners table" }; //return this to the client
+    return {
+      success: true,
+      message: "Owner successfully inserted",
+    };
+  } catch (error: any) {
+    //console.log("Error while inserting ", error);
+
+    if (error.code === "ER_DUP_ENTRY") {
+      return {
+        success: false,
+        message: "An owner with this phone number or email already exists.",
+      };
+    }
+
+    //else fallback to this
+    return {
+      success: false,
+      message: "An error occurred while completing this action",
+    };
   }
 
   //    The returned result has this structure
